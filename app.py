@@ -28,7 +28,12 @@ def show_users():
     )
 
 
-@app.route()
+@app.route('users/new')
+def create_new_user();
+    """ Takes form info and creates new user """
+
+
+
 # @app.route()
 # @app.route()
 # @app.route()
