@@ -1,0 +1,13 @@
+{%extendes 'base.html' %}
+{%block header %}User Edit Page{% endblock %}
+{% block body%}
+<form action="">
+    <label for="">First Name</label>
+    <input type="text" name='first_name'>
+    <label for="">Last Name</label>
+    <input type="text" name='last_name'>
+    <label for="">Image URL</label>
+    <input type="text" name='image_url'>
+    <button type='reset'>Cancel</button><button type='submit'>Save</button>
+</form>
+{% endblock%}

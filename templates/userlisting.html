@@ -1,0 +1,11 @@
+{%extendes 'base.html' %}
+
+{%block header %}Users{% endblock %}
+
+{% block body %}
+<ul>
+    {% for user in users%}
+        <li><a href="{{something goes here}}">{{user}}</a></li>
+    {% endfor %}
+</ul>
+{% endblock%}
