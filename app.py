@@ -22,10 +22,9 @@ def get_index():
 def show_users():
     """ List of all Users """
     users = User.query.all()
-    posts = Post.query.all()
     return render_template(
         'userlisting.html',
-        users=users, posts=posts
+        users=users
     )
 
 
@@ -59,10 +58,11 @@ def info_about_user(user_id):
     current_user = User.query.filter_by(id=user_id).one()
     user_full_name = f"{current_user.first_name} {current_user.last_name}"
     user_image = current_user.image_url
+    posts = Post.query.filter_by(user_id=user_id).all()
 
     return render_template(
                 'userdetails.html', user=user_full_name,
-                image_url=user_image, user_id=user_id)
+                image_url=user_image, user_id=user_id, posts=posts)
 
 
 @app.route('/users/<int:user_id>/edit')
@@ -121,4 +121,44 @@ def add_new_post(user_id):
     db.session.commit()
 
     return redirect(f"/users/{user_id}")
+
+@app.route('/posts/<int:post_id>')
+def show_posts(post_id):
+    """shows a post by post id"""
+    post = Post.query.get_or_404(post_id)
+    user = post.user
+    return render_template("postdetailpage.html",
+    post=post, user=user)
+
+@app.route('/posts/<int:post_id>/edit')
+def show_edit_post_page(post_id):
+    """takes us to our post edit page"""
+    post = Post.query.get_or_404(post_id)
+    user = post.user
+    return render_template("editpostform.html",
+    post=post,user=user)
+
+@app.route('/posts/<int:post_id>/edit', methods=["POST"])
+def edit_post(post_id):
+    """edits post then returns us  to the post page"""
+    post_title = request.form["title"]
+    post_content = request.form["content"]
+    current_post = Post.query.get_or_404(post_id)
+    
+
+
+    current_post.title = post_title
+    current_post.content = post_content
+
+    db.session.commit()
+
+    return redirect(f"/posts/{post_id}")
+
+@app.route('/posts/<int:post_id>/delete', methods=["POST"])
+def delete_post(post_id):
+    current_post = Post.query.get_or_404(post_id)
+    user = current_post.user
+    db.session.delete(current_post)
+
+    return redirect(f'/users/{user.id}')
 
