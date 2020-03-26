@@ -32,3 +32,19 @@ class User(db.Model):
     image_url = db.Column(
         db.String,
         default='https://www.cfdating.com/user_images/default.png')
+
+
+class Post(db.Model):
+    """  Class for Posts made by users"""
+
+    __tablename__ = "posts"
+
+    id = db.Column(db.Integer,
+                primary_key=True,
+               autoincrement=True)
+    title = db.Column(
+                db.String,
+                nullable=False)
+    body = db.Column(
+                db.String,
+                nullable=False)

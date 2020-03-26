@@ -5,6 +5,9 @@
 
 <span><img src="{{image_url}}" alt=""></span>
 <span><h2>{{user}}</h2></span>
-<button formaction="users/{{user_id}}/edit/" type="button">Edit</button>
-<button type="button">Delete</button>
+<a class="btn btn-primary" href="/users/{{user_id}}/edit">Edit</a>
+
+<Form action="/users/{{ user_id }}/delete" method="POST">
+    <button class="btn btn-alert">Delete</button></Form>
+
 {% endblock%}

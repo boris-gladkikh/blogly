@@ -1,13 +1,16 @@
 {%extends 'base.html' %}
+
 {%block header %}User Edit Page{% endblock %}
+
 {% block body%}
-<form action="">
-    <label for="">First Name</label>
+<form action="/users/{{user_id}}/edit" method="POST">
+    <label for="first_name">First Name</label>
     <input type="text" name='first_name'>
-    <label for="">Last Name</label>
+    <label for="last_name">Last Name</label>
     <input type="text" name='last_name'>
-    <label for="">Image URL</label>
+    <label for="image_url">Image URL</label>
     <input type="text" name='image_url'>
-    <button action= "/users/" type='button'>Cancel</button><button type='submit'>Save</button>
+    <a class="btn"href="/users">Cancel</a>
+    <button type='submit'>Save</button>
 </form>
 {% endblock%}
