@@ -1,14 +1,14 @@
-{%extendes 'base.html' %}
+{%extends 'base.html' %}
 {%block header %}Create a user{% endblock %}
 
 {% block body%}
-<form action="">
+<form action="/users/new/" method="POST">
     <label for="">First Name</label>
-    <input type="text" name='first_name'>
+    <input type="text" name='first_name'><br>
     <label for="">Last Name</label>
-    <input type="text" name='last_name'>
+    <input type="text" name='last_name'><br>
     <label for="">Image URL</label>
-    <input type="text" name='image_url'>
+    <input type="text" name='image_url'><br>
     <button type='submit'>Add</button>
 </form>
 {% endblock%}

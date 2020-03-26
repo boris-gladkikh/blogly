@@ -1,8 +1,10 @@
-{%extendes 'base.html' %}
-{%block header %}{{User}}{% endblock %}
+{%extends 'base.html' %}
+{%block header %}Details{% endblock %}
 
 {% block body%}
-<img src="{{image_url}}" alt="">
-<button>Edit</button>
-<button>Delete</button>
+
+<span><img src="{{image_url}}" alt=""></span>
+<span><h2>{{user}}</h2></span>
+<button formaction="users/{{user_id}}/edit/" type="button">Edit</button>
+<button type="button">Delete</button>
 {% endblock%}

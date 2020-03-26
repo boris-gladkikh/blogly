@@ -1,4 +1,4 @@
-{%extendes 'base.html' %}
+{%extends 'base.html' %}
 {%block header %}User Edit Page{% endblock %}
 {% block body%}
 <form action="">
@@ -8,6 +8,6 @@
     <input type="text" name='last_name'>
     <label for="">Image URL</label>
     <input type="text" name='image_url'>
-    <button type='reset'>Cancel</button><button type='submit'>Save</button>
+    <button action= "/users/" type='button'>Cancel</button><button type='submit'>Save</button>
 </form>
 {% endblock%}
