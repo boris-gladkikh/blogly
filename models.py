@@ -42,6 +42,10 @@ class Post(db.Model):
     id = db.Column(db.Integer,
                 primary_key=True,
                autoincrement=True)
+    author = db.Column(
+        db.Integer,
+        # user that wrote the post ref user_id
+                )
     title = db.Column(
                 db.String,
                 nullable=False)
