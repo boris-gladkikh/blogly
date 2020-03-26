@@ -1,7 +1,7 @@
 """Blogly application."""
 
 from flask import Flask, redirect, render_template, request
-from models import db, connect_db, User
+from models import db, connect_db, User, Post
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -15,7 +15,7 @@ db.create_all()
 @app.route('/')
 def get_index():
     """ Redirects to list of all Users """
-    return redirect("/users/")
+    return redirect("/users")
 
 
 @app.route('/users')
@@ -52,7 +52,7 @@ def post_new_user():
     return redirect("/users")
 
 
-@app.route('/users/<user_id>')
+@app.route('/users/<int:user_id>')
 def info_about_user(user_id):
     """  Shows information about the given user """
     current_user = User.query.filter_by(id=user_id).one()
@@ -64,13 +64,14 @@ def info_about_user(user_id):
                 image_url=user_image, user_id=user_id)
 
 
-@app.route('/users/<user_id>/edit')
+@app.route('/users/<int:user_id>/edit')
 def edit_user_html(user_id):
     """ Show Edit User Page  """
-    return render_template('useredit.html', user_id=user_id)
+    user = User.query.filter_by(id=user_id).one()
+    return render_template('useredit.html', user_id=user_id, user=user)
 
 
-@app.route('/users/<user_id>/edit', methods=['POST'])
+@app.route('/users/<int:user_id>/edit', methods=['POST'])
 def process_edit_form(user_id):
     """ Process the edit form, return user to the /users page """
     first_name = request.form["first_name"]
@@ -89,7 +90,7 @@ def process_edit_form(user_id):
     return redirect('/users')
 
 
-@app.route('/users/<user_id>/delete', methods=["POST"])
+@app.route('/users/<int:user_id>/delete', methods=["POST"])
 def delete_user(user_id):
     """ Deletes User """
     current_user = User.query.get_or_404(user_id)
@@ -99,3 +100,24 @@ def delete_user(user_id):
     # if we wanted to track a deleted user, we would create a
     # separtetable for them
     return redirect('/users')
+
+@app.route('/users/<int:user_id>/posts/new')
+def new_post_page(user_id):
+    """ adds new post by user """
+    current_user = User.query.get_or_404(user_id)
+
+    return render_template('addpostform.html', user_id=user_id, user=current_user)
+
+
+@app.route('/users/<int:user_id>/posts/new', methods=["POST"])
+def add_new_post(user_id):
+    """creates post from  form   data, appends to user detail page"""
+    post_title = request.form["title"]
+    post_content = request.form["content"]
+
+    new_post = Post(title=post_title, content=post_content )
+    db.session.add(new_post)
+    db.session.commit()
+
+    return redirect(f"/users/{user_id}")
+

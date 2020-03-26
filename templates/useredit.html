@@ -5,9 +5,9 @@
 {% block body%}
 <form action="/users/{{user_id}}/edit" method="POST">
     <label for="first_name">First Name</label>
-    <input type="text" name='first_name'>
+    <input value="{{user.first_name}}" type="text" name='first_name'>
     <label for="last_name">Last Name</label>
-    <input type="text" name='last_name'>
+    <input value="{{user.last_name}}"type="text" name='last_name'>
     <label for="image_url">Image URL</label>
     <input type="text" name='image_url'>
     <a class="btn"href="/users">Cancel</a>

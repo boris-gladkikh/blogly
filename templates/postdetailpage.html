@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %} 
+{{post.title}}
+{% endblock %}
+
+{% block body%}
+{{post.content}}
+by {{user.fist_name}}{{user.last_name}}
+<a class="btn" href="">Cancel</a>
+<a class="btn" href="">Edit</a>
+<a class="btn" href="">Delete</a>
+
+{% endblock%}

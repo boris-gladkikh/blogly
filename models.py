@@ -1,6 +1,7 @@
 """Models for Blogly."""
 
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -33,6 +34,7 @@ class User(db.Model):
         db.String,
         default='https://www.cfdating.com/user_images/default.png')
 
+    posts = db.relationship("Post", backref="user")
 
 class Post(db.Model):
     """  Class for Posts made by users"""
@@ -40,15 +42,23 @@ class Post(db.Model):
     __tablename__ = "posts"
 
     id = db.Column(db.Integer,
-                primary_key=True,
-               autoincrement=True)
-    author = db.Column(
+                   primary_key=True,
+                   autoincrement=True)
+    user_id = db.Column(
         db.Integer,
+        db.ForeignKey("users.id")
         # user that wrote the post ref user_id
                 )
     title = db.Column(
                 db.String,
                 nullable=False)
-    body = db.Column(
+    content = db.Column(
                 db.String,
                 nullable=False)
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        default= datetime.now
+    )
+
+    # user = db.relationship("User")
