@@ -22,9 +22,10 @@ def get_index():
 def show_users():
     """ List of all Users """
     users = User.query.all()
+    posts = Post.query.all()
     return render_template(
         'userlisting.html',
-        users=users
+        users=users, posts=posts
     )
 
 
@@ -115,7 +116,7 @@ def add_new_post(user_id):
     post_title = request.form["title"]
     post_content = request.form["content"]
 
-    new_post = Post(title=post_title, content=post_content )
+    new_post = Post(title=post_title, content=post_content, user_id=user_id )
     db.session.add(new_post)
     db.session.commit()
 
