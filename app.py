@@ -14,7 +14,7 @@ db.create_all()
 
 @app.route('/')
 def get_index():
-    """ Goes to list of Users """
+    """ Redirects to list of all Users """
     return redirect("/users/")
 
 
@@ -36,41 +36,46 @@ def create_new_user():
 
 @app.route('/users/new/', methods=["POST"])
 def post_new_user():
+    """ Process add form, add a new user and go back to /users """
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
     image_url = request.form["image_url"] or None
 
-
-    new_user = User(first_name = first_name,
-    last_name = last_name,
-    image_url = image_url)
+    new_user = User(
+                    first_name=first_name,
+                    last_name=last_name,
+                    image_url=image_url)
 
     db.session.add(new_user)
     db.session.commit()
 
     return redirect("/users/")
 
-    
+
 @app.route('/users/<user_id>/')
 def info_about_user(user_id):
-
+    """  Shows information about the given user """
     current_user = User.query.filter_by(id=user_id).one()
     user_full_name = f"{current_user.first_name} {current_user.last_name}"
     user_image = current_user.image_url
 
     print("\n\n\n This is our user_image \n\n", user_image)
 
-
-    return render_template('userdetails.html',
-    user = user_full_name,
-    image_url = user_image,
-    user_id = user_id
-    )
+    return render_template(
+                'userdetails.html', user=user_full_name,
+                image_url=user_image, user_id=user_id)
 
 
 @app.route('/users/<user_id>/edit/')
-def edit_user(user_id):
-
+def edit_user_html(user_id):
+    """ Show Edit User Page  """
     return render_template('useredit.html')
-# @app.route()
-# @app.route()
+
+
+# @app.route('/users/<user_id>/edit')
+# def process_edit_form(user_id)
+#     """ Process the edit form, return user to the /users page """
+
+# @app.route('/users/<user_id>/delete')
+# def delete_user(user_id)
+#     """ Deletes User """
